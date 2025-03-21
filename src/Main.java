@@ -1,26 +1,19 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 
 public class Main {
     public static void main(String[] args) {
-        int length = lengthOfLongestSubstring("abcdeabcdwderthsbvcabcdabcd");
-        System.out.println("Length of longest substring: " + length);
+        String input = "adadmadam";
+        System.out.println(longestPalindrome(input));
 
-        MedianArray medianArray = new MedianArray();
+        int num = 4568859;
+        System.out.println(ReverseInteger.reverse(num));
 
-        int[] arr1 = {1,3};
-        int[] arr2 = {2,4};
+            System.out.println(Atoi.atoi("   -42")); // Output: -42
+            System.out.println(Atoi.atoi("4193 with words")); // Output: 4193
+            System.out.println(Atoi.atoi("words and 987")); // Output: 0
+            System.out.println(Atoi.atoi("-91283472332")); // Output: -2147483648
 
-        int[] merged = medianArray.merge(arr1, arr2);
-        double median  = medianArray.median(arr1, arr2);
-        System.out.println(median);
-
-        System.out.println(Arrays.toString(merged));
-        for (int i = 0; i < merged.length; i++) {
-            System.out.println(merged[i]);
-        }
     }
 
     public static int lengthOfLongestSubstring(String s) {
@@ -78,4 +71,52 @@ public class Main {
         }
         return false;
     }
+
+    public static String longestPalindrome(String s) {
+
+//        HashMap<Character, Integer> charIndexMap = new HashMap<>();
+//        int currentIndex = 0;
+//        int left = 0;
+//        String longestPalindrome = "";
+//
+//        for (int right = 0; right < s.length(); right++) {
+//            char currentChar = s.charAt(right);
+//
+//            charIndexMap.put(currentChar, right);
+//            String currentWindow = s.substring(left,right);
+//            if (isPalindrome(currentWindow)) {
+//                if (currentWindow.length() > longestPalindrome.length()) {
+//                    longestPalindrome = currentWindow;
+//                }
+//            }
+//        }
+
+        ArrayList<String> palindromes = new ArrayList<>();
+
+        for (int left = 0; left < s.length(); left++) {
+            for (int right = left; right < s.length(); right++) {
+                if (isPalindrome(s.substring(left, right))) {
+                    palindromes.add(s.substring(left, right));
+                }
+            }
+
+        }
+        Comparator<String> lengthComparator = (s1,s2) -> Integer.compare(s2.length(), s1.length());
+        palindromes.sort(lengthComparator);
+
+
+
+
+
+        return palindromes.toArray().length > 0 ? palindromes.toArray()[0].toString() : s;
+    }
+
+    public static boolean isPalindrome(String s) {
+        if (s.length() > 1 ) {
+            String reversed = new StringBuilder(s).reverse().toString();
+            return reversed.equals(s);
+        }
+        return false;
+    }
 }
+
